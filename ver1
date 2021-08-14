@@ -1,0 +1,53 @@
+using namespace std;
+string spinWords(const string& str)
+{
+    int count = 0;
+    string strCopy = str;
+    for (int i = 0; i < strCopy.size(); i++) {
+        if (strCopy[i] == ' ') { ++count; }
+    }
+    if (count == 0) {
+        if (strCopy.length() >= 5) {
+            string wordCopy = strCopy;
+            strCopy = "";
+            for (int j = wordCopy.length() - 1; j > -1; j--) {
+                strCopy.push_back(wordCopy[j]);
+            }
+        }
+    }
+    else {
+        int first = 0;
+        int last=4;
+        int count1 = 0;
+        for (int i = 0; i < strCopy.size(); i++) {
+            if (strCopy[i] == ' ') {
+                last = i;
+                ++count1;
+                if (last - first >= 5) {
+                    string reverseStr = "";
+                    string wordCopy = strCopy.substr(first, last - first);
+                    for (int j = wordCopy.length() - 1; j > -1; j--) {
+                        reverseStr.push_back(wordCopy[j]);
+                    }
+                    strCopy.replace(first, last - first, reverseStr);
+                    first = last + 1;
+                }   else {
+                        first = last + 1;
+                    }
+                if (count1 == count) {
+                    last = strCopy.size();
+                }
+            }
+            if (last - first >= 5) {
+                string reverseStr = "";
+                string wordCopy = strCopy.substr(first, last - first);
+                for (int j = wordCopy.length() - 1; j > -1; j--) {
+                    reverseStr.push_back(wordCopy[j]);
+                }
+                strCopy.replace(first, last - first, reverseStr);
+                first = last + 1;
+            }
+        }
+    }
+    return strCopy;
+}// spinWords
